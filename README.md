@@ -1,1 +1,1 @@
-these are html games
+some iready games    (CATSTACKER: https://cdn.i-ready.com/instruction/game-catstacker/1.6.x/2/ )         (DIG SITE: https://cdn.i-ready.com/instruction/reward-games/v1.4.x/1/game-minedigger/ )  (GALAXY SPRINT: https://cdn.i-ready.com/instruction/reward-games/v1.4.x/1/game-lanerunner/   )   (BEGOOPED: https://cdn.i-ready.com/instruction/game-begooped/1.3.x/2/  )    (   WIZARD PINBALL:   https://cdn.i-ready.com/instruction/reward-games/v1.4.x/1/game-bubbles/     )   (PATH SPINNERS:   https://cdn.i-ready.com/instruction/game-hpr/1.4.x/2/   )
