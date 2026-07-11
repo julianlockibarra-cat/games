@@ -3,13 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 
 	<title>Flappy Bird Game</title>
 
 	<style>
+	body {
+		background-color: black;
+		margin: 0;
+		font-family: sans-serif;
+	}
 	canvas {
 		display: block;
 		position: absolute;
@@ -19,9 +23,60 @@
 		left: 0;
 		right: 0;
 	}
+	.neon-text {
+		position: absolute;
+		top: 12%;
+		left: 50%;
+		transform: translateX(-50%);
+		margin: 0;
+		z-index: 10;
+		color: #fff;
+		font-family: "Arial Black", sans-serif;
+		font-size: 2.5rem;
+		text-transform: uppercase;
+		text-align: center;
+		white-space: nowrap;
+		text-shadow:
+			0 0 5px #fff,
+			0 0 10px #fff,
+			0 0 20px #0ff,
+			0 0 40px #0ff,
+			0 0 80px #0ff,
+			0 0 90px #0ff,
+			0 0 100px #0ff;
+		pointer-events: none;
+	}
+	/* Settings Bar Styles */
+	.settings-bar {
+		position: absolute;
+		bottom: 5%;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		background: rgba(30, 30, 30, 0.8);
+		padding: 10px 20px;
+		border-radius: 8px;
+		border: 1px solid #444;
+		color: white;
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		font-weight: bold;
+	}
+	.settings-bar input[type=range] {
+		cursor: pointer;
+	}
 	</style>
 </head>
 <body>
+
+<h1 class="neon-text">Flappy Bird</h1>
+
+<div class="settings-bar">
+	<label for="speedSlider">Speed: <span id="speedValue">2</span>x</label>
+	<input type="range" id="speedSlider" min="1" max="5" step="0.5" value="2">
+</div>
+
 <script>
 // ==========================================
 // 1. SPRITE MANAGER
@@ -38,6 +93,15 @@ s_splash,
 s_buttons,
 s_numberS,
 s_numberB;
+
+// Global Game Speed Variable
+var gameSpeed = 2;
+
+// Listen for slider changes
+document.getElementById('speedSlider').addEventListener('input', function(e) {
+	gameSpeed = parseFloat(e.target.value);
+	document.getElementById('speedValue').innerText = gameSpeed;
+});
 
 function Sprite(img, x, y, width, height) {
 	this.img = img;
@@ -179,12 +243,34 @@ bird={
 
 pipes={
        _pipes:[],
+	   distanceCounter: 200, // Initialize to start spawning immediately
+	   
 	   reset:function(){
 	      this._pipes=[];
+		  this.distanceCounter = 200; 
 	   },
        update:function(){
-	     if(frames%100===0){
-		  var gapHeight = 95; 
+		 
+		 // Track horizontal distance covered
+		 this.distanceCounter += gameSpeed;
+		 
+		 // Base horizontal distance between pipes
+		 var targetHorizontalGap = 200;
+		 
+		 // INCREASE the horizontal distance when speed goes to 3x and above
+		 if (gameSpeed >= 3) {
+			 // Spreads them further apart. For 3x it adds 50px gap, 4x adds 100px, etc.
+			 targetHorizontalGap = 200 + ((gameSpeed - 2) * 50);
+		 }
+		 
+		 // Ensure they don't get impossible to pass (Minimum 120 pixels apart just in case)
+		 targetHorizontalGap = Math.max(120, targetHorizontalGap);
+
+	     if(this.distanceCounter >= targetHorizontalGap){
+		  
+		  this.distanceCounter = 0; // Reset counter for the next pipe
+		  
+		  var gapHeight = 95; // Kept the vertical gap strictly normal
 		  var min_y = 40;
 		  var max_y = height - s_fg.height - gapHeight - 40;
 		  var _y = min_y + Math.random() * (max_y - min_y);
@@ -208,14 +294,16 @@ pipes={
              p.scored = true;
          }
          
-         // Strict Hit Detection (Covers the infinite sky gap)
+         // Strict Hit Detection 
          if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + p.width) {
              if (bird.y - bird.radius < p.y || bird.y + bird.radius > p.y + p.gap) {
                  currentstate = states.Score;
              }
          }
             
-		 p.x-=2;
+		 // Applies the slider game speed to the pipes
+		 p.x -= gameSpeed;
+		 
 		 if(p.x < -p.width)
 		 {
 		 this._pipes.splice(i,1);
@@ -235,29 +323,32 @@ pipes={
 };
 
 function onpress(evt){
-switch(currentstate){
-case states.Splash:
-     currentstate=states.Game;
-	 bird.jump();
-	 break;
-case states.Game:
-     bird.jump();
-	 break;
-case states.Score:
-     var mx=evt.offsetX , my=evt.offsetY;
-	 if(mx==null || my==null)
-	 {mx=evt.touches[0].clientX;
-	  my=evt.touches[0].clientY;
-	 }
-	 if(okbtn.x < mx && mx <okbtn.x+okbtn.width  &&
-	    okbtn.y < my && my <okbtn.y+okbtn.height )
-          {
-		  pipes.reset();
-		  score=0;
-		  currentstate=states.Splash;
-		  }
-     break;
-}
+	// Prevent slider clicks from making the bird jump
+	if (evt.target.id === 'speedSlider') return;
+
+	switch(currentstate){
+	case states.Splash:
+		 currentstate=states.Game;
+		 bird.jump();
+		 break;
+	case states.Game:
+		 bird.jump();
+		 break;
+	case states.Score:
+		 var mx=evt.offsetX , my=evt.offsetY;
+		 if(mx==null || my==null)
+		 {mx=evt.touches[0].clientX;
+		  my=evt.touches[0].clientY;
+		 }
+		 if(okbtn.x < mx && mx <okbtn.x+okbtn.width  &&
+			okbtn.y < my && my <okbtn.y+okbtn.height )
+			  {
+			  pipes.reset();
+			  score=0;
+			  currentstate=states.Splash;
+			  }
+		 break;
+	}
 }
 
 function main(){
@@ -301,7 +392,7 @@ function main(){
 function run()
 {
      var loop=function(){
-            update();
+             update();
 			render();
 			window.requestAnimationFrame(loop,canvas);
         }
@@ -311,7 +402,8 @@ function run()
 function update(){
        frames++;
        if(currentstate!== states.Score){
-	       fgpos=(fgpos-2)%14;
+		   // Applies the slider game speed to the scrolling floor
+	       fgpos=(fgpos-gameSpeed)%14;
 	   }
 	   else
 	   { best=Math.max(best,score);}
