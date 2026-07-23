@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>PAC-MAN's 30th Birthday!</title>
+        <base href="https://www.google.com/">
+        <meta name="description" content="Play PAC-MAN™ instantly on Google! ©1980 NAMCO BANDAI Games Inc.">
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background: #000 !important;
+                overflow: hidden;
+                touch-action: none;
+            }
+
+            #stage {
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: #000;
+            }
+
+            #scaler {
+                width: 484px;
+                height: 208px;
+                position: relative;
+                transform-origin: center center;
+            }
+
+            #hplogo {
+                background: black url(/logos/pacman10-hp.2.png) 0 0 no-repeat;
+                width: 484px !important;
+                height: 208px !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                margin: 0 !important;
+            }
+
+            #hplogo-c {
+                outline: 0;
+            }
+
+            #hplogo-l {
+                background: #990;
+                display: none;
+                height: 2px;
+                left: 177px;
+                overflow: hidden;
+                position: absolute;
+                top: 157px;
+                width: 200px;
+            }
+
+            #hplogo-b {
+                background: #ff0;
+                height: 8px;
+                left: 0;
+                position: absolute;
+                width: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="stage">
+            <div id="scaler">
+                <div id="hplogo" title="PAC-MAN's 30th Birthday! Doodle with PAC-MAN™ & ©1980 NAMCO BANDAI Games Inc.">
+                    <div id="hplogo-l">
+                        <div id="hplogo-b"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script nonce="UboWC5kxBq8izF78sjFnMg">
+            // Dynamically scales game canvas to fill browser bounds
+            function fitGameToScreen() {
+                var scaler = document.getElementById('scaler');
+                if (!scaler) return;
+                
+                var targetWidth = 484;
+                var targetHeight = 208;
+                
+                var scaleX = window.innerWidth / targetWidth;
+                var scaleY = window.innerHeight / targetHeight;
+                
+                // Scale uniformly to fill maximum visible space without distortion
+                var scale = Math.min(scaleX, scaleY);
+                scaler.style.transform = 'scale(' + scale + ')';
+            }
+
+            window.addEventListener('resize', fitGameToScreen);
+            window.addEventListener('DOMContentLoaded', fitGameToScreen);
+            fitGameToScreen();
+
+            // Google Pac-Man Engine Bootstrapper
+            window.google || (window.google = {});
+            (function() {
+                google.doodle || (google.doodle = {});
+                
+                document.body.style.background = "#000";
+
+                function g(a) {
+                    google.doodle.pmlInstalled || (google.doodle.pmlInstalled = !0,
+                    a || (document.getElementById("hplogo").style.background = "black",
+                    window.setTimeout(function() {
+                        var c = document.getElementById("hplogo-l");
+                        c && (c.style.display = "block")
+                    }, 400)),
+                    a = document.createElement("script"),
+                    a.type = "text/javascript",
+                    a.src = "/logos/js/pacman10-hp.12.js",
+                    (document.getElementById("xjsc") || document.body).appendChild(a))
+                }
+
+                google.doodle.pmlLoaded || (google.doodle.pmlLoaded = !0,
+                
+                // Force autoplay immediately on initialization
+                google.doodle.pacManSound = !0,
+                g(!1),
+
+                google.dstr && google.dstr.push(function() {
+                    google.pacman && google.pacman.destroy();
+                    if (google.doodle.pmlInstalled) {
+                        for (var a = (document.getElementById("xjsc") || document.body).getElementsByTagName("script"), c = 0, b; b = a[c++]; )
+                            -1 != b.src.indexOf("/logos/js/pacman10-hp.12.js") && b && b.parentNode && b.parentNode.removeChild(b);
+                        google.doodle.pmlInstalled = !1
+                    }
+                }));
+
+                google.doodle.pacManQuery = function() {
+                    window.top.location.href = "/search?q=pacman+30th+anniversary&ct=pacman10-hp&oi=ddle"
+                };
+            }).call(this);
+        </script>
+    </body>
+</html>
