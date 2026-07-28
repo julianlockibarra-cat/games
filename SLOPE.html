@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOPE</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading-text {
+            color: blue;
+            font-family: sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        #progress-container {
+            width: 50%;
+            max-width: 400px;
+            height: 20px;
+            border: 2px solid blue;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: blue;
+            transition: width 0.2s ease;
+        }
+
+        /* Fullscreen Button Styling */
+        #fullscreen-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9998;
+            background-color: rgba(0, 0, 255, 0.7);
+            color: white;
+            border: 2px solid blue;
+            padding: 10px 18px;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #fullscreen-btn:hover {
+            background-color: blue;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div id="loading-text">LOADING...</div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+    <button id="fullscreen-btn">FULLSCREEN</button>
+
+    <iframe id="game-frame" sandbox="allow-scripts allow-same-origin allow-pointer-lock"></iframe>
+
+    <script>
+        const rawUrl = 'https://raw.githubusercontent.com/ReznorsRevenge1/slope/refs/heads/main/index.html';
+        
+        const loadingScreen = document.getElementById('loading-screen');
+        const progressBar = document.getElementById('progress-bar');
+        const iframe = document.getElementById('game-frame');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+        // Fullscreen toggle logic
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // Update button text depending on fullscreen state
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = 'EXIT FULLSCREEN';
+            } else {
+                fullscreenBtn.textContent = 'FULLSCREEN';
+            }
+        });
+
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            if (progress < 90) {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                progressBar.style.width = `${progress}%`;
+            }
+        }, 150);
+
+        fetch(rawUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(htmlContent => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0'; 
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        iframe.srcdoc = htmlContent;
+                    }, 500);
+
+                }, 400);
+            })
+            .catch(error => {
+                clearInterval(progressInterval);
+                console.error('Error fetching the HTML:', error);
+                loadingScreen.innerHTML = '<p style="color: red; text-align: center; font-family: sans-serif;">Failed to load the content from GitHub.</p>';
+            });
+    </script>
+
+</body>
+</html>
