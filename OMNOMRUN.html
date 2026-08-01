@@ -1,147 +1,53 @@
 <!doctype html>
-<html lang="en">
-<head> 
-<base href="https://cdn.jsdelivr.net/gh/I-Ready-Sauce/CDN@530590926de923aa96169707d16e32be6d15b46f/instruction/game-catstacker/1.6.x/2">
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
-    <title>cat stacker</title>
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/icon/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/icon/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/icon/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/icon/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="assets/icon/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="assets/icon/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="assets/icon/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="assets/icon/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="assets/icon/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="assets/icon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="assets/icon/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="assets/icon/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="assets/icon/favicon-128.png" sizes="128x128" />
-    <style type="text/css">
-        html,
-        body,
-        #gameContainer {
-            height: 100%;
-            text-align: center;
-        }
+<html>
+<head>
+    <base href="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/om-nom-run/">
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover' />
+    <meta charset='utf-8'>
+    <link rel="stylesheet" type="text/css" href="styles.css" nonce="kxALQV0qa1UnXWc-RRIS-Q">
+    <link rel="manifest" href="manifest.json">
+    <style></style>
+    <title>Om Nom Run</title>
+    
+    <script src="https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/ytgame.js" nonce="kxALQV0qa1UnXWc-RRIS-Q"></script>
+    <script nonce="kxALQV0qa1UnXWc-RRIS-Q">ytgame.game.firstFrameReady();</script>
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #fullWindowHolder {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            background-color: lightgrey;
-        }
-
-        .loaderContainer {
-            overflow: hidden;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .loadingLabel {
-            color: white;
-            text-align: center;
-        }
-
-        /* from https://projects.lukehaas.me/css-loaders/ */
-
-        .loader,
-        .loader:after {
-            border-radius: 50%;
-            width: 10em;
-            height: 10em;
-        }
-
-        .loader {
-            margin: 60px auto;
-            font-size: 10px;
-            position: relative;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(32, 206, 247, 0.2);
-            border-right: 1.1em solid rgba(32, 206, 247, 0.2);
-            border-bottom: 1.1em solid rgba(32, 206, 247, 0.2);
-            border-left: 1.1em solid #20cef7;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-animation: load8 1.1s infinite linear;
-            animation: load8 1.1s infinite linear;
-        }
-
-        @-webkit-keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @font-face {
-            font-family: 'balooregular';
-            src: url('/assets/fonts/baloo-regular-webfont.woff2') format('woff2'), url('/assets/fonts/baloo-regular-webfont.woff') format('woff'), url('/assets/fonts/baloo-regular-webfont.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-    </style>
-    <script src="./libs/phaser/phaser-ce-2.16.0.min.js"></script>
-    <script src="./libs/audiocogs/aurora.js/v0.4.4/aurora.js"></script>
-    <script src="./libs/audiocogs/mp3.js/v0.1.0/mp3.js"></script>
-    <script src="./node_modules/lodash/lodash.js"></script>
-    <script src="./node_modules/javascript-state-machine/lib/state-machine.js"></script>
-    <script type="text/javascript">
-        // without setting the domain here we will have CORS error when accessing the parents variables
-        var arrDomain = location.hostname.split('.');
-        if (arrDomain.length > 2 && !/amazonaws/.test(location.hostname) && !/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/.test(location.hostname)) {
-            arrDomain.shift();
-            document.domain = arrDomain.join('.');
-        }
-        if (document.fonts) {
-            document.fonts.load('24pt balooregular');
-        }
-
-        var init = window.parent.window.gameBridge ? window.parent.window.gameBridge.initialized : function() {};
-
-        function displayGame() {
-            document.getElementById('fullWindowHolder').style.display = 'none';
-            document.getElementById('gameContainer').style.display = 'block';
-            init();
-        }
+    <!-- ---------------- API Snippet ---------------- -->
+    <script nonce="kxALQV0qa1UnXWc-RRIS-Q">
+        window.famobi_gameID = "om-nom-run"; // the actual GAMEID is added to the final version by Famobi
+        window.famobi_gameJS = [
+            function() {
+                window.ENABLE_PRIVACY_POLICY_AND_TOS = true; //set to true to enable ToS and Privacy Policy buttons in game setting menu
+                window.OPEN_TERMS_OF_SERVICE = () => window.open('https://famobi.com/terms-of-service'); //replace with an actual link
+                window.OPEN_PRIVACY_POLICY = () => window.open('https://famobi.com/privacy'); //replace with an actual link
+            },
+            "preloader.js",
+            "playcanvas-stable.min.js",
+            "__settings__.js",
+            "__modules__.js",
+            "__start__.js",
+            "__loading__.js"
+        ];
+        (function (document, url, fgJS, firstJS) {
+            fgJS = document.createElement('script');
+            firstJS = document.getElementsByTagName('script')[0];
+            fgJS.src = url + encodeURIComponent(document.location.href);
+            firstJS.parentNode.insertBefore(fgJS, firstJS);
+        })(document, 'html5games/gameapi/v1.js?e=');         
     </script>
+
+    <!-- ---------------- API Snippet end ------------- -->
+
 </head>
+<body>  
 
-<body>
-    <div id="fullWindowHolder">
-        <div id="loaderContainer" class="loaderContainer">
-            <div class="loader">Loading...</div>
-            <div id="loadingLabel" class="loadingLabel"></div>
+    <div id="application-splash-wrapper">
+        <div id="application-splash">
+            <div id="loaderBar"></div>
+            <span id="loadingText">0%</span>
         </div>
+        <img id="logo" src="img/logo.png">
     </div>
-    <div id="gameContainer"></div>
-    <script type="module" src="/src/main.js"></script>
-</body>
 
+</body>
 </html>
