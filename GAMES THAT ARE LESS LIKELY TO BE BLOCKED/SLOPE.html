@@ -41,13 +41,13 @@
             height: 46px;
         }
 
-     
+        
         #fullscreen-btn {
             position: fixed;
             top: 20px;       
             right: 80px;    
             z-index: 9998;
-            width: 45px;     
+            width: 45px;    
             height: 45px;
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -117,7 +117,7 @@
                 return response.text();
             })
             .then(htmlContent => {
-           
+                
                 setTimeout(() => {
                     loadingScreen.style.opacity = '0'; 
                     
