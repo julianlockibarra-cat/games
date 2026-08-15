@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Tic Tac Toe</title>
+    <style>
+        /* Keeping the original CSS intact as it was working well */
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --x-color: #e74c3c;
+            --o-color: #3498db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2) rotate(15deg);
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-btn.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-rows: auto auto auto;
+            gap: 20px;
+            justify-items: center;
+            width: 100%;
+            max-width: 400px;
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .status {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background-color: var(--bg-color);
+            padding: 12px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease, transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .status:hover::before {
+            left: 100%;
+        }
+
+        .status.x {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--x-color);
+            transform: scale(1.05);
+        }
+
+        .status.o {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--o-color);
+            transform: scale(1.05);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-grid:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            min-width: 85px;
+            min-height: 85px;
+            background-color: #fff;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            font-size: 48px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .cell:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .cell:active {
+            transform: scale(0.95);
+        }
+
+        .cell.x {
+            color: var(--x-color);
+            animation: xAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cell.o {
+            color: var(--o-color);
+            animation: oAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cell.x::before, 
+        .cell.x::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 6px;
+            background-color: var(--x-color);
+            border-radius: 3px;
+            transform-origin: center;
+        }
+
+        .cell.x::before {
+            transform: rotate(45deg) scale(0);
+            animation: xLine1 0.3s 0.1s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .cell.x::after {
+            transform: rotate(-45deg) scale(0);
+            animation: xLine2 0.3s 0.2s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .cell.x {
+            color: transparent;
+        }
+
+        .cell.o::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border: 6px solid var(--o-color);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: oCircle 0.4s 0.1s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .cell.o {
+            color: transparent;
+        }
+
+        .cell.winning {
+            background-color: rgba(255, 215, 0, 0.6);
+            border-color: gold;
+            animation: highlight 1s ease-in-out alternate infinite;
+        }
+
+        .cell.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .cell.invalid {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            font-size: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .fade {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .game-stats {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-stats:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-stats p {
+            margin: 8px 0;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .game-stats p:hover {
+            transform: scale(1.05);
+        }
+
+        .score-value {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .score-changed {
+            animation: scoreUpdate 0.5s ease;
+        }
+
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 1000;
+            animation: slideDown 0.5s 0.2s forwards, slideUp 0.5s 2.7s forwards;
+        }
+
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-color);
+            opacity: 0.8;
+            border-radius: 0;
+            animation: confetti-fall 3s linear forwards;
+            z-index: -1;
+        }
+
+        /* Added game title */
+        .game-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--x-color), var(--o-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite alternate;
+        }
+
+        /* Enhanced animations */
+        @keyframes xLine1 {
+            0% { transform: rotate(45deg) scale(0); opacity: 0; }
+            100% { transform: rotate(45deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes xLine2 {
+            0% { transform: rotate(-45deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-45deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes oCircle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes xAnim {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes oAnim {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes highlight {
+            0% { transform: scale(1.05); box-shadow: 0 0 15px gold; }
+            100% { transform: scale(1); box-shadow: 0 0 30px gold; }
+        }
+
+        @keyframes slideDown {
+            0% { top: -100px; }
+            100% { top: 20px; }
+        }
+
+        @keyframes slideUp {
+            0% { top: 20px; }
+            100% { top: -100px; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            15% { transform: translateX(-10px) rotate(-2deg); }
+            30% { transform: translateX(8px) rotate(2deg); }
+            45% { transform: translateX(-6px) rotate(-1deg); }
+            60% { transform: translateX(4px) rotate(1deg); }
+            75% { transform: translateX(-2px) rotate(-0.5deg); }
+            90% { transform: translateX(1px) rotate(0.5deg); }
+        }
+
+        @keyframes confetti-fall {
+            0% { 
+                transform: translateY(0) rotate(0deg) translateX(0); 
+                opacity: 1; 
+            }
+            25% {
+                transform: translateY(25vh) rotate(180deg) translateX(20px);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(50vh) rotate(360deg) translateX(-20px);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(75vh) rotate(540deg) translateX(15px);
+                opacity: 0.6;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg) translateX(-10px); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes scoreUpdate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); color: var(--primary-color); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Ripple effect for cells */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Themes with improved color combinations */
+        .theme-black {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --bg-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --x-color: #e74c3c;
+            --o-color: #3498db;
+        }
+
+        .theme-green {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --x-color: #e74c3c;
+            --o-color: #3498db;
+        }
+
+        .theme-blue {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --bg-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --x-color: #e74c3c;
+            --o-color: #2ecc71;
+        }
+
+        .theme-yellow {
+            --primary-color: #f1c40f;
+            --secondary-color: #f39c12;
+            --bg-color: #f9f9f9;
+            --text-color: #2c3e50;
+            --x-color: #e74c3c;
+            --o-color: #3498db;
+        }
+
+        .theme-red {
+            --primary-color: #e74c3c;
+            --secondary-color: #c0392b;
+            --bg-color: #fdedec;
+            --text-color: #2c3e50;
+            --x-color: #2c3e50;
+            --o-color: #3498db;
+        }
+
+        .theme-purple {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+            --bg-color: #f5eef8;
+            --text-color: #2c3e50;
+            --x-color: #e74c3c;
+            --o-color: #2ecc71;
+        }
+
+        /* Dark mode */
+        .theme-dark {
+            --primary-color: #a29bfe;
+            --secondary-color: #6c5ce7;
+            --bg-color: #2d3436;
+            --text-color: #dfe6e9;
+            --x-color: #ff7675;
+            --o-color: #74b9ff;
+        }
+
+        @media (max-width: 480px) {
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .cell {
+                font-size: 30px;
+                min-width: 70px;
+                min-height: 70px;
+            }
+
+            .status {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+
+            .action-btn {
+                font-size: 15px;
+                padding: 8px 10px;
+            }
+
+            .game-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-green">
+    <div class="theme-switcher">
+        <button class="theme-btn" style="background: #2c3e50" data-theme="theme-black" aria-label="Black theme"></button>
+        <button class="theme-btn active" style="background: #2ecc71" data-theme="theme-green" aria-label="Green theme"></button>
+        <button class="theme-btn" style="background: #3498db" data-theme="theme-blue" aria-label="Blue theme"></button>
+        <button class="theme-btn" style="background: #f1c40f" data-theme="theme-yellow" aria-label="Yellow theme"></button>
+        <button class="theme-btn" style="background: #e74c3c" data-theme="theme-red" aria-label="Red theme"></button>
+        <button class="theme-btn" style="background: #9b59b6" data-theme="theme-purple" aria-label="Purple theme"></button>
+        <button class="theme-btn" style="background: #2d3436" data-theme="theme-dark" aria-label="Dark theme"></button>
+    </div>
+
+    <h1 class="game-title">Tic Tac Toe</h1>
+    
+    <div class="game-container">
+        <div class="status" id="status" aria-atomic="true" aria-live="polite">Player X's turn</div>
+        <div class="game-grid" id="gameGrid"></div>
+        <div class="btn-container">
+            <button class="action-btn" id="undoBtn">Undo</button>
+            <button class="action-btn" id="restartBtn">Restart Game</button>
+            <button class="action-btn" id="resetScoresBtn">Reset Scores</button>
+        </div>
+        <div class="game-stats">
+            <p>X Wins: <span id="xWins" class="score-value">0</span></p>
+            <p>O Wins: <span id="oWins" class="score-value">0</span></p>
+            <p>Draws: <span id="draws" class="score-value">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const statusElement = document.getElementById('status');
+        const gameGrid = document.getElementById('gameGrid');
+        const undoBtn = document.getElementById('undoBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const resetScoresBtn = document.getElementById('resetScoresBtn');
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const gameContainer = document.querySelector('.game-container');
+        let currentPlayer = 'X';
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        let moveHistory = [];
+        let pastGameStates = [];
+        let gameActive = true;
+
+        // Create game cells
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement('button');
+            cell.classList.add('cell');
+            cell.setAttribute('data-index', i);
+            cell.setAttribute('aria-label', `Cell ${i + 1} unmarked`);
+            cell.addEventListener('click', handleCellClick);
+            cell.addEventListener('mousedown', createRippleEffect);
+            cell.addEventListener('keydown', handleKeyPress);
+            gameGrid.appendChild(cell);
+        }
+
+        function createRippleEffect(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            ripple.classList.add('ripple');
+            button.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function handleCellClick(e) {
+            const cell = e.target;
+            const cellIndex = parseInt(cell.getAttribute('data-index'));
+
+            if (gameState[cellIndex] !== '' || !gameActive) {
+                cell.classList.add('invalid');
+                setTimeout(() => cell.classList.remove('invalid'), 400);
+                return;
+            }
+
+            pastGameStates.push([...gameState]);
+            gameState[cellIndex] = currentPlayer;
+            moveHistory.push(cellIndex);
+            
+            cell.textContent = '';
+            cell.classList.add(currentPlayer.toLowerCase());
+            cell.setAttribute('aria-label', `Cell ${cellIndex + 1} marked with ${currentPlayer}`);
+
+            playSound('move');
+
+            if (checkWin()) {
+                handleGameEnd(`Player ${currentPlayer} wins!`);
+                return;
+            }
+
+            if (checkDraw()) {
+                handleGameEnd("Game ended in a draw!");
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusElement.textContent = `Player ${currentPlayer}'s turn`;
+            statusElement.classList.remove('x', 'o');
+            statusElement.classList.add(currentPlayer.toLowerCase());
+            updateUndoButton();
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.target.click();
+            }
+        }
+
+        function checkWin() {
+            const winConditions = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            for (const condition of winConditions) {
+                if (condition.every(index => gameState[index] === currentPlayer)) {
+                    condition.forEach((index, i) => {
+                        setTimeout(() => {
+                            document.querySelector(`.cell[data-index='${index}']`).classList.add('winning');
+                        }, i * 150);
+                    });
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function checkDraw() {
+            return gameState.every(cell => cell !== '');
+        }
+
+        function handleGameEnd(result) {
+            gameActive = false;
+            disableCells();
+            saveGameState();
+
+            if (result.includes('wins')) {
+                playSound('win');
+                createConfetti();
+            }
+
+            if (result === "Player X wins!") {
+                updateScore('xWins');
+            } else if (result === "Player O wins!") {
+                updateScore('oWins');
+            } else {
+                updateScore('draws');
+            }
+
+            statusElement.textContent = result;
+            updateUndoButton();
+            restartBtn.focus();
+            showNotification(result);
+        }
+
+        function updateScore(elementId) {
+            const element = document.getElementById(elementId);
+            element.textContent = parseInt(element.textContent) + 1;
+            element.classList.add('score-changed');
+            setTimeout(() => element.classList.remove('score-changed'), 500);
+        }
+
+        function playSound(type) {
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                if (type === 'move') {
+                    oscillator.frequency.value = 440;
+                    gainNode.gain.value = 0.1;
+                    oscillator.start();
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                } else if (type === 'win') {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((note, index) => {
+                        setTimeout(() => {
+                            const osc = audioContext.createOscillator();
+                            const gain = audioContext.createGain();
+                            osc.connect(gain);
+                            gain.connect(audioContext.destination);
+                            osc.frequency.value = note;
+                            gain.gain.value = 0.2;
+                            osc.start();
+                            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+                            osc.stop(audioContext.currentTime + 0.3);
+                        }, index * 100);
+                    });
+                }
+            } catch (e) {
+                console.warn('Audio playback failed:', e);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db', '#9b59b6', '#1abc9c'];
+            const shapes = ['circle', 'square', 'triangle'];
+            const count = Math.min(50, Math.floor(window.innerWidth / 20));
+
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.floor(Math.random() * 12) + 8;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                if (shape === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                } else if (shape === 'triangle') {
+                    confetti.style.width = '0';
+                    confetti.style.height = '0';
+                    confetti.style.backgroundColor = 'transparent';
+                    confetti.style.borderLeft = `${size/2}px solid transparent`;
+                    confetti.style.borderRight = `${size/2}px solid transparent`;
+                    confetti.style.borderBottom = `${size}px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
+                }
+                
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        function disableCells() {
+            document.querySelectorAll('.cell').forEach(cell => cell.classList.add('disabled'));
+        }
+
+        function enableCells() {
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('disabled', 'winning');
+                const index = cell.getAttribute('data-index');
+                cell.setAttribute('aria-label', `Cell ${parseInt(index) + 1} unmarked`);
+            });
+        }
+
+        function undoLastMove() {
+            if (moveHistory.length === 0 || !gameActive) return;
+            
+            const lastMove = moveHistory.pop();
+            gameState = [...pastGameStates.pop()];
+            
+            const cell = document.querySelector(`.cell[data-index='${lastMove}']`);
+            cell.textContent = '';
+            cell.classList.remove('x', 'o');
+            cell.setAttribute('aria-label', `Cell ${lastMove + 1} unmarked`);
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusElement.textContent = `Player ${currentPlayer}'s turn`;
+            statusElement.classList.remove('x', 'o');
+            statusElement.classList.add(currentPlayer.toLowerCase());
+            updateUndoButton();
+            playSound('move');
+        }
+
+        function restartGame() {
+            gameContainer.classList.add('fade');
+            setTimeout(() => {
+                currentPlayer = 'X';
+                gameState = ['', '', '', '', '', '', '', '', ''];
+                moveHistory = [];
+                pastGameStates = [];
+                gameActive = true;
+                enableCells();
+                statusElement.textContent = `Player ${currentPlayer}'s turn`;
+                statusElement.classList.remove('x', 'o');
+                statusElement.classList.add(currentPlayer.toLowerCase());
+
+                document.querySelectorAll('.cell').forEach(cell => {
+                    cell.textContent = '';
+                    cell.classList.remove('x', 'o', 'winning');
+                });
+
+                updateUndoButton();
+                gameContainer.classList.remove('fade');
+                saveGameState();
+            }, 500);
+        }
+
+        function updateUndoButton() {
+            undoBtn.disabled = moveHistory.length === 0 || !gameActive;
+            undoBtn.textContent = moveHistory.length === 0 ? "Undo" : `Undo (${moveHistory.length})`;
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.classList.add('notification');
+            notification.setAttribute('role', 'alert');
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3200);
+        }
+
+        function saveGameState() {
+            localStorage.setItem('ticTacToeState', JSON.stringify({
+                gameState,
+                currentPlayer,
+                moveHistory,
+                scores: {
+                    xWins: document.getElementById('xWins').textContent,
+                    oWins: document.getElementById('oWins').textContent,
+                    draws: document.getElementById('draws').textContent
+                }
+            }));
+        }
+
+        // Theme switching
+        themeButtons.forEach(button => {
+            button.setAttribute('aria-pressed', 'false');
+            button.addEventListener('click', () => {
+                themeButtons.forEach(btn => {
+                    btn.setAttribute('aria-pressed', 'false');
+                    btn.classList.remove('active');
+                });
+                button.setAttribute('aria-pressed', 'true');
+                button.classList.add('active');
+                
+                document.body.style.opacity = '0.8';
+                setTimeout(() => {
+                    document.body.className = button.dataset.theme;
+                    document.body.style.opacity = '1';
+                }, 200);
+                
+                localStorage.setItem('selectedTheme', button.dataset.theme);
+            });
+        });
+
+        // Load saved state
+        const savedState = localStorage.getItem('ticTacToeState');
+        if (savedState) {
+            const data = JSON.parse(savedState);
+            gameState = data.gameState;
+            currentPlayer = data.currentPlayer;
+            moveHistory = data.moveHistory;
+            document.getElementById('xWins').textContent = data.scores.xWins;
+            document.getElementById('oWins').textContent = data.scores.oWins;
+            document.getElementById('draws').textContent = data.scores.draws;
+            
+            gameState.forEach((value, index) => {
+                if (value) {
+                    const cell = document.querySelector(`.cell[data-index='${index}']`);
+                    cell.classList.add(value.toLowerCase());
+                    cell.setAttribute('aria-label', `Cell ${index + 1} marked with ${value}`);
+                }
+            });
+            
+            statusElement.textContent = gameActive ? `Player ${currentPlayer}'s turn` : "Game Over";
+            statusElement.classList.add(currentPlayer.toLowerCase());
+        }
+
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme) {
+            document.body.className = savedTheme;
+            const activeButton = document.querySelector(`[data-theme="${savedTheme}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+                activeButton.setAttribute('aria-pressed', 'true');
+            }
+        }
+
+        // Event listeners
+        resetScoresBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset all scores?')) {
+                const scoreElements = document.querySelectorAll('.score-value');
+                scoreElements.forEach(element => {
+                    element.classList.add('score-changed');
+                    element.textContent = '0';
+                    setTimeout(() => element.classList.remove('score-changed'), 300);
+                });
+                showNotification("Scores have been reset!");
+                saveGameState();
+            }
+        });
+
+        undoBtn.addEventListener('click', undoLastMove);
+        restartBtn.addEventListener('click', restartGame);
+        updateUndoButton();
+    </script>
+</body>
+</html>
