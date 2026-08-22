@@ -1,4 +1,6 @@
-GAME FILES LINKS HERE: https://originfastly.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg 
+GAME FILES LINKS HERE:
+https://originfastly.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg 
+
 https://testingcf.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg 
 
 https://gcore.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg
