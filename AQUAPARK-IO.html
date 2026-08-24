@@ -9,7 +9,117 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>Aquapark.io</title>
-  <link rel="stylesheet" href="TemplateData/style.css" nonce="gAKBBT4aLfaZvJiS8jIdUw">
+<style>#unity-container { position: absolute }
+#unity-container.unity-desktop { width: 100%; height: 100%; left: 50%; top: 50%; transform: translate(-50%, -50%) }
+#unity-container.unity-mobile { position: fixed; width: 100%; height: 100% }
+#unity-canvas { background: #0cb9fe; }
+.unity-mobile #unity-canvas { width: 100%; height: 100% }
+#unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
+#unity-logo { width: 154px; height: 130px; background: url('logo_aqupark.png') no-repeat center }
+#unity-progress-bar-empty { 
+  width: 141px;
+  height: 18px; 
+  margin-top: 10px; 
+  margin-left: 6.5px; 
+  background: url('https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/progress-bar-empty-dark.png') no-repeat center; 
+  margin: auto;
+}
+#unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/progress-bar-full-dark.png') no-repeat center }
+#unity-footer { position: relative }
+.unity-mobile #unity-footer { display: none }
+#unity-webgl-logo { float:left; width: 204px; height: 38px; background: url('https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/webgl-logo.png') no-repeat center }
+#unity-build-title { float: right; margin-right: 10px; line-height: 38px; font-family: arial; font-size: 18px }
+#unity-fullscreen-button { cursor:pointer; float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
+#unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none }
+
+/* Remove the default margins for consistency. */
+* {
+  margin: 0;
+}
+
+/* Match the viewport. */
+html, body {
+  width: 100%;
+  height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+/* Prevent the canvas from scrolling. */
+canvas {
+  display: block;
+}
+
+  /* Style de la div */
+  #unity-loading-bar {
+    margin: auto;
+    width: 100%;  /* 50% de la largeur de la fenêtre */
+    height: 100%; /* 50% de la hauteur de la fenêtre */
+    background-color: #0cb9fe;
+    /*animation: backgroundImageAnimation 60s infinite; */
+  }
+
+  .unity-preload-1{
+    background-position: center;
+    background-image: url('https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/assets/logo_aquapark.jpg');
+    background-repeat: no-repeat;
+  }
+
+  .unity-preload-2{
+    background-size: auto 100%;
+    background-position: center;
+    background-image: url('https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/assets/Loader.jpg');
+    background-repeat: no-repeat;
+  }
+
+  /* Définition de l'animation */
+  @keyframes appearAnimation {
+    0% {
+      transform: scale(0.8,0.8);
+    }
+    50% {
+      transform: scale(1.0,1.0);
+    }
+    100% {
+      transform: scale(0.8,0.8);
+    }
+  } 
+
+  #filler{
+    width: 100%;
+    height: 75%;
+  }
+
+  #playBtn{
+    width: 205px;
+    height: 86px;
+    display: none;
+    background-image: url("https://cdn.jsdelivr.net/gh/bubbls/youtube-playables@main/aquapark-io/assets/play.png");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    margin: auto;
+  }
+
+  .btnAppear{
+    animation: appearAnimation 1s infinite;
+  }
+
+  #carroutxt{
+    margin: 100%;
+    margin: auto;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-shadow:  -1px -1px 0 black,
+                  1px -1px 0 black,
+                  -1px  1px 0 black,
+                  1px  1px 0 black;
+  }
+
+  /* #unity-canvas { background: rgb(21, 129, 230) } */</style>
   <script>(function(){'use strict';var aa=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,c){if(a==Array.prototype||a==Object.prototype)return a;a[b]=c.value;return a};function ba(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var c=a[b];if(c&&c.Math==Math)return c}throw Error("Cannot find global object");}var ca=ba(this);
 function da(a,b){if(b)a:{var c=ca;a=a.split(".");for(var d=0;d<a.length-1;d++){var e=a[d];if(!(e in c))break a;c=c[e]}a=a[a.length-1];d=c[a];b=b(d);b!=d&&b!=null&&aa(c,a,{configurable:!0,writable:!0,value:b})}}function l(a){function b(d){return a.next(d)}function c(d){return a.throw(d)}return new Promise(function(d,e){function f(g){g.done?d(g.value):Promise.resolve(g.value).then(b,c).then(f,e)}f(a.next())})}da("globalThis",function(a){return a||ca});
 da("Object.values",function(a){return a?a:function(b){var c=[],d;for(d in b)Object.prototype.hasOwnProperty.call(b,d)&&c.push(b[d]);return c}});da("Array.prototype.includes",function(a){return a?a:function(b,c){var d=this;d instanceof String&&(d=String(d));var e=d.length;c=c||0;for(c<0&&(c=Math.max(c+e,0));c<e;c++){var f=d[c];if(f===b||Object.is(f,b))return!0}return!1}});
