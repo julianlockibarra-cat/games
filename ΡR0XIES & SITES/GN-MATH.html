@@ -1,0 +1,674 @@
+<!doctype html><html lang="en"><base href="https://cdn.jsdelivr.net/gh/soonicdatguy/freebuisness.github.io@main/"><link rel="icon" type="image/png" href="favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png"><script>window.addEventListener("beforeunload",function(e){return e.preventDefault(),e.returnValue="","Are you sure you want to leave? Any unsaved changes will be lost."})</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-WX5VS54ZDW")</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>gn-math</title><meta name="title" content="GN-Math"><meta name="description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."><meta property="og:type" content="website"><meta property="og:url" content="https://gn-math.github.io/"><meta property="og:title" content="GN-Math"><meta property="og:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://gn-math.github.io/"><meta name="twitter:title" content="GN-Math"><meta name="twitter:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."><style>:root {
+    --primary: #fc2651;
+    --primary-hover: #e91e47;
+    --primary-light: rgba(252, 38, 81, 0.1);
+    --primary-lighter: rgba(252, 38, 81, 0.05);
+    --accent: #8b5cf6;
+    --accent-light: rgba(139, 92, 246, 0.1);
+    --success: #10b981;
+    --warning: #f59e0b;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --bg: #ffffff;
+    --bg-secondary: #f8fafc;
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    --glass: rgba(255, 255, 255, 0.8);
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 20px rgba(252, 38, 81, 0.3);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --gradient-primary: linear-gradient(135deg, #fc2651 0%, #e91e47 100%);
+    --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.dark-mode {
+    --primary: #fc2651;
+    --primary-hover: #ff4d75;
+    --primary-light: rgba(252, 38, 81, 0.15);
+    --primary-lighter: rgba(252, 38, 81, 0.08);
+    --accent: #a855f7;
+    --accent-light: rgba(168, 85, 247, 0.15);
+    --success: #34d399;
+    --warning: #fbbf24;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-light: #64748b;
+    --bg: #0f172a;
+    --bg-secondary: #1e293b;
+    --surface: #1e293b;
+    --surface-hover: #334155;
+    --border: #334155;
+    --border-light: #475569;
+    --glass: rgba(30, 41, 59, 0.8);
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7), 0 8px 10px -6px rgb(0 0 0 / 0.7);
+    --shadow-glow: 0 0 20px rgba(252, 38, 81, 0.4);
+    --gradient-primary: linear-gradient(135deg, #fc2651 0%, #ff4d75 100%);
+    --gradient-accent: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+    background: var(--gradient-primary);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(20px);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.search-container {
+    display: flex;
+    flex: 1;
+    max-width: 500px;
+    gap: 0.75rem;
+}
+
+#searchBar {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+#searchBar:focus {
+    background: var(--text);
+    box-shadow: 0 0 0 3px rgba(252, 38, 81, 0.25), var(--shadow);
+    transform: translateY(-1px);
+    color: var(--glass);
+}
+
+#searchBar::placeholder {
+    color: var(--text-muted);
+}
+
+#sortOptions {
+    padding: 0.875rem 1rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    color: var(--text-muted);
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 130px;
+    box-shadow: var(--shadow-sm);
+}
+
+#sortOptions:hover {
+    background: var(--text);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    color: var(--glass);
+}
+
+#filterOptions {
+    padding: 0.875rem 1rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    color: var(--text-muted);
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 130px;
+    box-shadow: var(--shadow-sm);
+}
+
+#filterOptions:hover {
+    background: var(--text);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    color: var(--glass);
+}
+
+.control-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+main {
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    padding-bottom: 6rem;
+}
+
+#zoneCount {
+    margin: 0 0 1.5rem;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#zoneCount::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+#container,
+#featuredZones {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.zone-item {
+    background: var(--gradient-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+}
+
+.zone-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary);
+}
+
+.zone-item:hover::before {
+    opacity: 1;
+}
+
+.zone-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary-light);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.zone-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    background: var(--border-light);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zone-item:hover img {
+    transform: scale(1.05);
+}
+
+.zone-item button {
+    background: transparent;
+    color: var(--text);
+    border: 0;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.zone-item:hover button {
+    color: var(--primary);
+    background: rgba(252, 38, 81, 0.05);
+}
+
+#zoneViewer {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.zone-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.4rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-lg);
+}
+
+.zone-title {
+    flex: 1;
+    min-width: 0;
+}
+
+#zoneName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    line-height: 1.3;
+}
+
+#zoneId {
+    display: none;
+}
+
+#zoneAuthor {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+#zoneAuthor:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.zone-controls {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.zone-controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+}
+
+.zone-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+#zoneFrame {
+    flex-grow: 1;
+    border: none;
+    width: 90%;
+    height: 90%;
+}
+
+#popupOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.popup {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 520px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    animation: slideInScale 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInScale {
+    from {
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.popup-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#popupTitle {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+#popupClose {
+    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(20px);
+}
+
+#popupClose:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+#popupBody {
+    padding: 1.5rem;
+    overflow-y: auto;
+    color: var(--text);
+}
+
+#popupBody input[type="text"],
+#popupBody input[type="file"] {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    color: var(--text);
+    font-size: 15px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+#popupBody input[type="text"]:focus,
+#popupBody input[type="file"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(252, 38, 81, 0.1);
+    transform: translateY(-1px);
+}
+
+footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 1rem 1rem;
+    text-align: center;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+}
+
+.footer-links a:hover {
+    color: var(--primary-hover);
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    main {
+        padding: 1.5rem 1rem;
+    }
+
+    #container,
+    #featuredZones {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .zone-item button {
+        padding: 1rem 0.75rem;
+        min-height: 65px;
+        font-size: 13px;
+    }
+
+    .footer-links {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #container,
+    #featuredZones {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+    }
+
+    .popup {
+        margin: 0.5rem;
+    }
+
+    .zone-item:hover {
+        transform: translateY(-10px) scale(1.01);
+    }
+
+}
+.control-button img {
+    transition: transform 0.4s ease;
+    width: 24px;
+    height: 24px;
+}
+
+.control-button:hover img {
+    transform: rotate(40deg);
+}
+
+.control-button,
+.control-button:hover {
+    box-shadow: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+.control-button:active {
+    transform: translateY(0);
+}
+
+.control-buttons button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(20px);
+}
+.control-buttons button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.settings-button {
+    background: var(--gradient-primary);
+    color: white;
+    border: 0;
+    padding: 0.875rem 1.5rem;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+    min-width: 200px;
+    width: 100%;
+    text-align: center;
+}
+
+.settings-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.settings-button:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+.info-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: background-color 0.2s, transform 0.2s;
+    color: inherit;
+    vertical-align: middle;
+}
+
+.info-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.info-button:active {
+    transform: scale(0.95);
+}
+
+.info-button svg {
+    display: block;
+}</style><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#fb2651"><body class="dark-mode"><header><div class="header-content"><div class="logo">gn-math</div><div class="search-container"><input id="searchBar" placeholder="Search zones..." oninput="filterZones()"> <select id="sortOptions" onchange="sortZones()"><option value="name">Name<option value="id">ID (Date)<option value="popular">Popular<option value="trendingDay">Trending (Day)<option value="trendingWeek">Trending (Week)<option value="trendingMonth">Trending (Month)</select> <select id="filterOptions" onchange="filterZones2()"><option value="none">(SELECT TAG)</select></div><div class="control-buttons"><button id="refresh" class="control-button" title="Refresh all the zones" onclick="listZones()"><img src="https://cdn.jsdelivr.net/gh/julianlockibarra-cat/assets@main/refresh-icon.png" alt="refresh"></button> <button id="settings" class="control-button" title="Settings!"><img src="https://cdn.jsdelivr.net/gh/julianlockibarra-cat/assets@main/setting.png" alt="settings"></button></div></div></header><main><br><details id="featuredZonesWrapper" open><summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">Featured Zones</summary><div id="featuredZones" class="zone-container"></div></details><br><hr><br><details id="allZonesWrapper" open><summary id="allSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">All Zones</summary><div id="container">Loading...</div></details></main><div id="zoneViewer"><div class="zone-header"><div class="zone-title"><h2 id="zoneName">zone</h2><button class="info-button" onclick="showZoneInfo()" title="Zone Information"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button> <span id="zoneId" style="display: none;"></span> <a id="zoneAuthor" href="#" target="_blank">by Author</a></div><div class="zone-controls"><button onclick="fullscreenZone()">Fullscreen</button> <button onclick="aboutBlank()">Open in New Tab</button> <button onclick="downloadZone()">Download</button> <button onclick="closeZone()">Close</button></div></div><iframe id="zoneFrame"></iframe></div><div id="popupOverlay"><div class="popup"><div class="popup-header"><h3 id="popupTitle">Title</h3><button id="popupClose" onclick="closePopup()">×</button></div><div id="popupBody">Content will be here</div></div></div><div class="footer-links"><a href="#" onclick="return loadDMCA(),!1">DMCA</a> <a href="#" onclick="return showContact(),!1">Contact</a> <a href="#" onclick="return loadPrivacy(),!1">Privacy Policy</a> <a href="javascript:saveData()">Export Data</a> <a href="#" onclick='return document.getElementById("importData").click(),!1'>Import Data</a> <input type="file" id="importData" style="display: none;" onchange="loadData(event)"></div><script>const container=document.getElementById("container"),zoneViewer=document.getElementById("zoneViewer");let zoneFrame=document.getElementById("zoneFrame");const searchBar=document.getElementById("searchBar"),sortOptions=document.getElementById("sortOptions"),filterOptions=document.getElementById("filterOptions"),zonesurls=["https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json","https://cdn.jsdelivr.net/gh/freebuisness/assets@latest/zones.json","https://cdn.jsdelivr.net/gh/freebuisness/assets@master/zones.json","https://cdn.jsdelivr.net/gh/freebuisness/assets/zones.json"];let zonesURL=zonesurls[Math.floor(Math.random()*zonesurls.length)];const coverURL="https://cdn.jsdelivr.net/gh/freebuisness/covers@main",htmlURL="https://cdn.jsdelivr.net/gh/freebuisness/html@main";let zones=[],popularityData={};const featuredContainer=document.getElementById("featuredZones");function toTitleCase(e){return e.replace(/\w\S*/g,e=>e.charAt(0).toUpperCase()+e.substring(1).toLowerCase())}async function listZones(){try{let e,t,n;try{e=await fetch("https://api.github.com/repos/freebuisness/assets/commits?t="+Date.now())}catch(e){}if(e&&200===e.status)try{t=await e.json(),n=t[0].sha,n&&(zonesURL=`https://cdn.jsdelivr.net/gh/freebuisness/assets@${n}/zones.json`)}catch(e){try{let e=await fetch("https://raw.githubusercontent.com/freebuisness/xml/refs/heads/main/sha.txt?t="+Date.now());e&&200===e.status&&(n=(await e.text()).trim(),n&&(zonesURL=`https://cdn.jsdelivr.net/gh/freebuisness/assets@${n}/zones.json`))}catch(e){}}const o=await fetch(zonesURL+"?t="+Date.now()),a=await o.json();zones=a,zones[0].featured=!0,await Promise.all([fetchPopularity("year"),fetchPopularity("month"),fetchPopularity("week"),fetchPopularity("day")]),sortZones();try{const e=new URLSearchParams(window.location.search).get("id"),t=window.location.hash.includes("embed");if(e){const n=zones.find(t=>t.id+""==e+"");if(n)if(t)if(n.url.startsWith("http"))window.open(n.url,"_blank");else{const e=n.url.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL);fetch(e+"?t="+Date.now()).then(e=>e.text()).then(e=>{document.documentElement.innerHTML=e;const t=document.createElement("div");t.style.position="fixed",t.style.bottom="20px",t.style.right="20px",t.style.backgroundColor="#cce5ff",t.style.color="#004085",t.style.padding="10px",t.style.border="1px solid #b8daff",t.style.borderRadius="5px",t.style.boxShadow="0px 0px 10px rgba(0,0,0,0.1)",t.style.fontFamily="Arial, sans-serif",t.innerHTML='Play more games at <a href="https://gn-math.dev" target="_blank" style="color:#004085; font-weight:bold;">https://gn-math.dev</a>!';const n=document.createElement("button");n.innerText="?",n.style.marginLeft="10px",n.style.background="none",n.style.border="none",n.style.cursor="pointer",n.style.color="#004085",n.style.fontWeight="bold",n.onclick=()=>t.remove(),t.appendChild(n),document.body.appendChild(t),document.documentElement.querySelectorAll("script").forEach(e=>{const t=document.createElement("script");e.src?t.src=e.src:t.textContent=e.textContent,document.body.appendChild(t)})}).catch(e=>alert("Failed to load zone: "+e))}else openZone(n)}}catch(e){}let r=[];for(const e of a)Array.isArray(e.special)&&r.push(...e.special);r=[...new Set(r)];let s=document.getElementById("filterOptions");if(s&&s.children.length>1)for(;s.children.length>1;)s.removeChild(s.lastElementChild);for(const e of r){const t=document.createElement("option");t.value=e,t.textContent=toTitleCase(e),s.appendChild(t)}}catch(e){console.error(e),container.innerHTML=`Error loading zones: ${e}`}}async function fetchPopularity(e){try{popularityData[e]||(popularityData[e]={});const t=await fetch("https://data.jsdelivr.com/v1/stats/packages/gh/freebuisness/html@main/files?period="+e);(await t.json()).forEach(t=>{const n=t.name.match(/\/(\d+)\.html$/);if(n){const o=parseInt(n[1]);popularityData[e][o]=t.hits?.total??0}})}catch(t){popularityData[e]||(popularityData[e]={}),popularityData[e][0]=0}}function sortZones(){const e=sortOptions.value;"name"===e?zones.sort((e,t)=>e.name.localeCompare(t.name)):"id"===e?zones.sort((e,t)=>e.id-t.id):"popular"===e?zones.sort((e,t)=>(popularityData.year?.[t.id]??0)-(popularityData.year?.[e.id]??0)):"trendingMonth"===e?zones.sort((e,t)=>(popularityData.month?.[t.id]??0)-(popularityData.month?.[e.id]??0)):"trendingWeek"===e?zones.sort((e,t)=>(popularityData.week?.[t.id]??0)-(popularityData.week?.[e.id]??0)):"trendingDay"===e&&zones.sort((e,t)=>(popularityData.day?.[t.id]??0)-(popularityData.day?.[e.id]??0)),zones.sort((e,t)=>-1===e.id?-1:-1===t.id?1:0),""===featuredContainer.innerHTML&&displayFeaturedZones(zones.filter(e=>e.featured)),displayZones(zones)}function displayFeaturedZones(e){featuredContainer.innerHTML="",e.forEach((e,t)=>{const n=document.createElement("div");n.className="zone-item",n.onclick=()=>openZone(e);const o=document.createElement("img");o.dataset.src=e.cover.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL),o.alt=e.name,o.loading="lazy",o.className="lazy-zone-img",n.appendChild(o);const a=document.createElement("button");a.textContent=e.name,a.onclick=t=>{t.stopPropagation(),openZone(e)},n.appendChild(a),featuredContainer.appendChild(n)}),""===featuredContainer.innerHTML?featuredContainer.innerHTML="No featured zones found.":document.getElementById("allZonesSummary").textContent=`Featured Zones (${e.length})`;const t=document.querySelectorAll("#featuredZones img.lazy-zone-img"),n=new IntersectionObserver((e,t)=>{e.forEach(e=>{if(e.isIntersecting&&!zoneViewer.hidden){const n=e.target;n.src=n.dataset.src,n.classList.remove("lazy-zone-img"),t.unobserve(n)}})},{rootMargin:"100px",threshold:.1});t.forEach(e=>{n.observe(e)})}function displayZones(e){container.innerHTML="",e.forEach((e,t)=>{const n=document.createElement("div");n.className="zone-item",n.onclick=()=>openZone(e);const o=document.createElement("img");o.dataset.src=e.cover.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL),o.alt=e.name,o.loading="lazy",o.className="lazy-zone-img",n.appendChild(o);const a=document.createElement("button");a.textContent=e.name,a.onclick=t=>{t.stopPropagation(),openZone(e)},n.appendChild(a),container.appendChild(n)}),""===container.innerHTML?container.innerHTML="No zones found.":document.getElementById("allSummary").textContent=`All Zones (${e.length})`;const t=document.querySelectorAll("img.lazy-zone-img"),n=new IntersectionObserver((e,t)=>{e.forEach(e=>{if(e.isIntersecting&&!zoneViewer.hidden){const n=e.target;n.src=n.dataset.src,n.classList.remove("lazy-zone-img"),t.unobserve(n)}})},{rootMargin:"100px",threshold:.1});t.forEach(e=>{n.observe(e)})}function filterZones2(){const e=filterOptions.value;if("none"===e)displayZones(zones);else{const t=zones.filter(t=>t.special?.includes(e));0!==e.length&&document.getElementById("featuredZonesWrapper").removeAttribute("open"),displayZones(t)}}function filterZones(){const e=searchBar.value.toLowerCase(),t=zones.filter(t=>t.name.toLowerCase().includes(e));0!==e.length&&document.getElementById("featuredZonesWrapper").removeAttribute("open"),displayZones(t)}function openZone(e){if(e.url.startsWith("http"))window.open(e.url,"_blank");else{const t=e.url.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL);fetch(t+"?t="+Date.now()).then(e=>e.text()).then(t=>{null===zoneFrame.contentDocument&&(zoneFrame=document.createElement("iframe"),zoneFrame.id="zoneFrame",zoneViewer.appendChild(zoneFrame)),zoneFrame.contentDocument.open(),zoneFrame.contentDocument.write(t),zoneFrame.contentDocument.close(),document.getElementById("zoneName").textContent=e.name,document.getElementById("zoneId").textContent=e.id,document.getElementById("zoneAuthor").textContent="by "+e.author,e.authorLink&&(document.getElementById("zoneAuthor").href=e.authorLink),zoneViewer.style.display="block";try{const t=new URL(window.location);t.searchParams.set("id",e.id),history.pushState(null,"",t.toString())}catch(e){}zoneViewer.hidden=!0}).catch(e=>alert("Failed to load zone: "+e))}}function aboutBlank(){const e=window.open("about:blank","_blank");let t=zones.find(e=>e.id+""===document.getElementById("zoneId").textContent).url.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL);fetch(t+"?t="+Date.now()).then(e=>e.text()).then(t=>{e&&(e.document.open(),e.document.write(t),e.document.close())})}function closeZone(){zoneViewer.hidden=!1,zoneViewer.style.display="none",zoneViewer.removeChild(zoneFrame);try{const e=new URL(window.location);e.searchParams.delete("id"),history.pushState(null,"",e.toString())}catch(e){}}function downloadZone(){let e=zones.find(e=>e.id+""===document.getElementById("zoneId").textContent);fetch(e.url.replace("{HTML_URL}",htmlURL)+"?t="+Date.now()).then(e=>e.text()).then(t=>{const n=new Blob([t],{type:"text/plain;charset=utf-8"}),o=URL.createObjectURL(n),a=document.createElement("a");a.href=o,a.download=e.name+".html",document.body.appendChild(a),a.click(),document.body.removeChild(a),URL.revokeObjectURL(o)})}function fullscreenZone(){zoneFrame.requestFullscreen?zoneFrame.requestFullscreen():zoneFrame.mozRequestFullScreen?zoneFrame.mozRequestFullScreen():zoneFrame.webkitRequestFullscreen?zoneFrame.webkitRequestFullscreen():zoneFrame.msRequestFullscreen&&zoneFrame.msRequestFullscreen()}function sanitizeData(e,t=1e3,n=1e4){if("string"==typeof e)return e.length>t?e.slice(0,t)+"...[truncated]":e;if(e instanceof Uint8Array)return e.length>n?`[Uint8Array too large (${e.length} bytes), truncated]`:e;if(Array.isArray(e))return e.map(e=>sanitizeData(e,t,n));if(e&&"object"==typeof e){const o={};for(const a in e)e.hasOwnProperty(a)&&(o[a]=sanitizeData(e[a],t,n));return o}return e}async function saveData(){alert("This might take a while, dont touch anything other than this OK button");const e={};e.cookies=document.cookie,e.localStorage={...localStorage},e.sessionStorage={...sessionStorage},e.indexedDB={};const t=await indexedDB.databases();for(const n of t)n.name&&(e.indexedDB[n.name]={},await new Promise((t,o)=>{const a=indexedDB.open(n.name,n.version);a.onerror=()=>o(a.error),a.onsuccess=()=>{const o=a.result,r=Array.from(o.objectStoreNames);if(0===r.length)return void t();const s=o.transaction(r,"readonly"),i=[];for(const t of r){e.indexedDB[n.name][t]=[];const o=s.objectStore(t).getAll(),a=new Promise((a,r)=>{o.onsuccess=()=>{e.indexedDB[n.name][t]=sanitizeData(o.result,1e3,100),a()},o.onerror=()=>r(o.error)});i.push(a)}Promise.all(i).then(()=>t())}}));e.caches={};const n=await caches.keys();for(const t of n){const n=await caches.open(t),o=await n.keys();e.caches[t]=[];for(const a of o){const o=await n.match(a);if(!o)continue;const r=o.clone(),s=r.headers.get("content-type")||"";let i;try{if(s.includes("application/json"))i=await r.json();else if(s.includes("text")||s.includes("javascript"))i=await r.text();else{const e=await r.arrayBuffer();i=btoa(String.fromCharCode(...new Uint8Array(e)))}}catch(e){i="[Unable to read body]"}e.caches[t].push({url:a.url,body:i,contentType:s})}}alert("Done, wait for the download to come");const o=document.createElement("a");o.href=URL.createObjectURL(new Blob([JSON.stringify(e)],{type:"application/octet-stream"})),o.download=`${Date.now()}.data`,document.body.appendChild(o),o.click(),document.body.removeChild(o)}async function loadData(e){const t=e.target.files[0];if(!t)return;const n=new FileReader;n.onload=async function(e){const t=JSON.parse(e.target.result);if(t.cookies&&t.cookies.split(";").forEach(e=>{document.cookie=e.trim()}),t.localStorage)for(const e in t.localStorage)localStorage.setItem(e,t.localStorage[e]);if(t.sessionStorage)for(const e in t.sessionStorage)sessionStorage.setItem(e,t.sessionStorage[e]);if(t.indexedDB)for(const e in t.indexedDB){const n=t.indexedDB[e];await new Promise((t,o)=>{const a=indexedDB.open(e,1);a.onupgradeneeded=e=>{const t=e.target.result;for(const e in n)t.objectStoreNames.contains(e)||t.createObjectStore(e,{keyPath:"id",autoIncrement:!0})},a.onsuccess=e=>{const a=e.target.result.transaction(Object.keys(n),"readwrite");a.onerror=()=>o(a.error);let r=Object.keys(n).length;for(const e in n){const o=a.objectStore(e);o.clear().onsuccess=()=>{for(const t of n[e])o.put(t);r--,0===r&&t()}}},a.onerror=()=>o(a.error)})}if(t.caches)for(const e in t.caches){const n=await caches.open(e);await n.keys().then(e=>Promise.all(e.map(e=>n.delete(e))));for(const o of t.caches[e]){let e;if(o.contentType.includes("application/json"))e=JSON.stringify(o.body);else if(o.contentType.includes("text")||o.contentType.includes("javascript"))e=o.body;else{const t=atob(o.body),n=t.length,a=new Uint8Array(n);for(let e=0;e<n;e++)a[e]=t.charCodeAt(e);e=a.buffer}const t=new Headers({"content-type":o.contentType}),a=new Response(e,{headers:t});await n.put(o.url,a)}}alert("Data loaded")},alert("This might take a while, dont touch anything other than this OK button"),n.readAsText(t)}function darkMode(){document.body.classList.toggle("dark-mode")}function cloakIcon(e){const t=document.querySelector("link[rel~='icon']");t.rel="icon",0===(e+"").trim().length?t.href="favicon.png":t.href=e,document.head.appendChild(t)}function cloakName(e){0!==(e+"").trim().length?document.title=e:document.title="gn-math"}function tabCloak(){closePopup(),document.getElementById("popupTitle").textContent="Tab Cloak";const e=document.getElementById("popupBody");e.innerHTML='\n        <label for="tab-cloak-textbox" style="font-weight: bold;">Set Tab Title:</label><br>\n        <input type="text" id="tab-cloak-textbox" placeholder="Enter new tab name..." oninput="cloakName(this.value)">\n        <br><br><br><br>\n        <label for="tab-cloak-textbox" style="font-weight: bold;">Set Tab Icon:</label><br>\n        <input type="text" id="tab-cloak-textbox" placeholder="Enter new tab icon..." oninput=\'cloakIcon(this.value)\'>\n        <br><br><br>\n    ',e.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex"}const settings=document.getElementById("settings");function showContact(){document.getElementById("popupTitle").textContent="Contact";const e=document.getElementById("popupBody");e.innerHTML="\n    <p>Discord: https://discord.gg/NAFw4ykZ7n</p>\n    <p>Email: gn.math.business@gmail.com</p>",e.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex"}function loadPrivacy(){document.getElementById("popupTitle").textContent="Privacy Policy";const e=document.getElementById("popupBody");e.innerHTML='\n        <div style="max-height: 60vh; overflow-y: auto;">\n            <h2>PRIVACY POLICY</h2>\n            <p>Last updated Feburary 20, 2026</p>\n            <p>This Privacy Notice for gn-math ("we," "us," or "our"), describes how and why we might access, collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including when you:</p>\n            <ul>\n                <li>Visit our website at <a href="https://gn-math.dev">https://gn-math.dev</a>, or any website of ours that links to this Privacy Notice</li>\n                <li>Engage with us in other related ways, including any sales, marketing, or events</li>\n            </ul>\n            <p>Questions or concerns? Reading this Privacy Notice will help you understand your privacy rights and choices. We are responsible for making decisions about how your personal information is processed. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="https://discord.gg/NAFw4ykZ7n">https://discord.gg/NAFw4ykZ7n</a>.</p>\n            \n            <h3>SUMMARY OF KEY POINTS</h3>\n            <p>This summary provides key points from our Privacy Notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our table of contents below to find the section you are looking for.</p>\n            \n            <p><strong>What personal information do we process?</strong> When you visit, use, or navigate our Services, we may process personal information depending on how you interact with us and the Services, the choices you make, and the products and features you use. Learn more about personal information you disclose to us.</p>\n            \n            <p><strong>Do we process any sensitive personal information?</strong> Some of the information may be considered "special" or "sensitive" in certain jurisdictions, for example your racial or ethnic origins, sexual orientation, and religious beliefs. We do not process sensitive personal information.</p>\n            \n            <p><strong>Do we collect any information from third parties?</strong> We do not collect any information from third parties.</p>\n            \n            <p><strong>How do we process your information?</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so. Learn more about how we process your information.</p>\n            \n            <p><strong>In what situations and with which parties do we share personal information?</strong> We may share information in specific situations and with specific third parties. Learn more about when and with whom we share your personal information.</p>\n            \n            <p><strong>How do we keep your information safe?</strong> We have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information. Learn more about how we keep your information safe.</p>\n            \n            <p><strong>What are your rights?</strong> Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information. Learn more about your privacy rights.</p>\n            \n            <p><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by submitting a data subject access request, or by contacting us. We will consider and act upon any request in accordance with applicable data protection laws.</p>\n        </div>\n    ',e.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex"}function loadDMCA(){document.getElementById("popupTitle").textContent="DMCA";const e=document.getElementById("popupBody");e.innerHTML='\n        <div class="dmca-content">\n            <p>\n                If you own or developed a game that is on <strong>gn-math</strong> \n                and would like it removed, please do one of the following:\n            </p>\n            <ol>\n                <li>\n                    <a href="https://discord.gg/D4c9VFYWyU" target="_blank" rel="noopener noreferrer">\n                        Join the Discord\n                    </a> and DM <strong>breadbb</strong> or ping me in a public channel \n                    <strong>[INSTANT RESPONSE]</strong>\n                </li>\n                <li>\n                    Email me at \n                    <a href="mailto:gn.math.business@gmail.com">gn.math.business@gmail.com</a> \n                    with the subject starting with <code>!DMCA</code>.\n                    <strong>[DELAYED RESPONSE]</strong>\n                </li>\n            </ol>\n            <p>\n                If you are going to do an email, please show proof you own the game before I have to ask.\n            </p>\n        </div>\n    ',e.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex"}settings.addEventListener("click",()=>{document.getElementById("popupTitle").textContent="Settings";const e=document.getElementById("popupBody");e.innerHTML='\n    <button class="settings-button" onclick="darkMode()">Toggle Dark Mode</button>\n    <br><br>\n    <button class="settings-button" onclick="tabCloak()">Tab Cloak</button>\n    <br>\n    ',e.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex"});let _allStatsCache=null;async function getAllStats(){if(_allStatsCache)return _allStatsCache;let e=1,t=!1;const n=Object.create(null);for(;!t;){const o=Array.from({length:5},(t,n)=>e+n),a=await Promise.all(o.map(e=>fetch(`https://data.jsdelivr.com/v1/stats/packages/gh/freebuisness/html@main/files?period=year&page=${e}&limit=100`).then(e=>e.ok?e.json():[])));for(const e of a){if(!Array.isArray(e)||0===e.length){t=!0;break}for(const t of e){if(!t?.name)continue;const e=t.name.match(/^\/(\d+)([.-])/);if(!e)continue;const o=e[1];n[o]||(n[o]={hits:0,bandwidth:0}),n[o].hits+=t.hits?.total??0,n[o].bandwidth+=t.bandwidth?.total??0}}e+=5}return _allStatsCache=n,n}async function getStats(e){e=String(e);const t=await getAllStats();return t[e]?.hits??0}function showZoneInfo(){let e=Number(document.getElementById("zoneId").textContent);document.getElementById("popupTitle").textContent="Info";const t=document.getElementById("popupBody");t.innerHTML="<p>Loading...</p>",t.contentEditable=!1,document.getElementById("popupOverlay").style.display="flex",fetch(`https://api.github.com/repos/freebuisness/html/commits?path=${e}.html`).then(e=>e.json()).then(async n=>{let o=await getStats(e);idjson=zones.filter(t=>t.id===e)[0],document.getElementById("popupTitle").textContent=`${idjson.name} Info`;const a=new Date(n.at(-1).commit.author.date);let r=new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit",hour12:!0}).format(a);t.innerHTML=`\n        <p>\n        <b>Id</b>: ${e}<br>\n        <b>Name</b>: ${idjson.name}<br>\n        ${idjson.author?`<b>Game Author</b>: ${idjson.author}<br>`:""}\n        ${idjson.authorLink?`<b>Game Author Link</b>: <a style="color:#FFFF00;" href=${idjson.authorLink}>${idjson.authorLink}</a><br>`:""}\n        ${idjson.special?`<b>Tags</b>: ${idjson.special}<br>`:""}\n        <b>Gn-Math Adder</b>: ${n.at(-1).commit.author.name}<br>\n        <b>Date Added</b>: ${r}<br>\n        <b>Times Played (Globally)</b>: ${Number(o).toLocaleString("en-US")}\n        </p>`})}function closePopup(){document.getElementById("popupOverlay").style.display="none"}listZones(),HTMLCanvasElement.prototype.toDataURL=function(...e){return""}
+try{new URLSearchParams(window.location.search).get("privacy")&&loadPrivacy()}catch(a){};navigator.serviceWorker.register(location.protocol+"//"+location.hostname+"/sw.js")</script>
